@@ -5,43 +5,30 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 public class WelcomeActivity extends AppCompatActivity {
 
-    Player player;
-    Computer computer;
-    TextView rock;
-    TextView paper;
-    TextView scissors;
+    Button play;
+    EditText inputText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_page);
+
+        play = findViewById(R.id.playGameBtn);
+        inputText = findViewById(R.id.nameBox);
+
     }
 
     public void onButtonClicked(View button){
-        player = new Player("James");
-        computer = new Computer("The House");
 
-        if (button.getId() == R.id.rockBtn){
-        player.playerChoice(Throw.ROCK);
-        }
-        else if (button.getId() == R.id.paperBtn) {
-            player.playerChoice(Throw.PAPER);
-        }
-        else if (button.getId() == R.id.scissorsBtn) {
-            player.playerChoice(Throw.SCISSORS);
-        }
-        Throw getPlayerInput = player.playersThrow();
-        int playersScore = player.getPlayerScore();
-        int computersScore = computer.getComputerScore();
-
+        String input = inputText.getText().toString();
         Intent i = new Intent(this, ResultsActivity.class);
-        i.putExtra("Throw", getPlayerInput.getThrowName().toUpperCase() );
-        i.putExtra("playerScore", playersScore);
-        i.putExtra("computerScore", computersScore);
+        i.putExtra("inputText", input);
         startActivity(i);
     }
 

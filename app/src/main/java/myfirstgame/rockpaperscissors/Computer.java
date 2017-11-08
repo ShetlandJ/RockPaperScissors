@@ -29,4 +29,8 @@ public class Computer {
     public void increaseComputerScore(int computerScore) {
         this.computerScore += computerScore;
     }
+
+    public void setComputerScore(int computerScore) {
+        this.computerScore = computerScore;
+    }
 }

@@ -3,47 +3,63 @@ package myfirstgame.rockpaperscissors;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 public class ResultsActivity extends AppCompatActivity {
 
     TextView result;
-    TextView playerScore;
-    TextView gameScore;
+    TextView myScore;
+    TextView computerScore;
+
+    EditText inputName;
 
     Game game;
-    Player player;
-    Computer computer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.results);
 
-        result = findViewById(R.id.result);
-        playerScore = findViewById(R.id.playerScoreView);
-        gameScore = findViewById(R.id.cpuScoreView);
-
         game = new Game();
 
+        result = findViewById(R.id.result);
+        myScore = findViewById(R.id.userScore);
+        computerScore = findViewById(R.id.cpuScore);
 
         Intent i = getIntent();
-
         Bundle extras = i.getExtras();
-        String win = extras.getString("Throw");
-        int pScore = extras.getInt("playerScore");
-        int cScore = extras.getInt("computerScore");
-
-        game.getPlayer().increasePlayerScore(pScore);
-        game.getComputer().increaseComputerScore(cScore);
-
-        result.setText(game.compareHands(Throw.valueOf(win)));
-
-        playerScore.setText(String.valueOf(game.getPlayer().getPlayerScore()));
-        gameScore.setText(String.valueOf(game.getComputer().getComputerScore()));
+        String name = extras.getString("inputText");
+        game.getPlayer().setName(name);
 
     }
 
+    public void onButtonClicked(View button){
+        if (button.getId() == R.id.rockBtn){
+        game.getPlayer().playerChoice(Throw.ROCK);
+        }
+        else if (button.getId() == R.id.paperBtn) {
+            game.getPlayer().playerChoice(Throw.PAPER);
+        }
+        else if (button.getId() == R.id.scissorsBtn) {
+            game.getPlayer().playerChoice(Throw.SCISSORS);
+        }
+        String resultText = game.compareHands(game.getPlayer().playersThrow());
+
+        result.setText(resultText);
+        myScore.setText(String.valueOf(game.getPlayer().getPlayerScore()));
+        computerScore.setText(String.valueOf(game.getComputer().getComputerScore()));
+
+    }
+
+    public void onClearButtonClicked(View button){
+        game.getPlayer().setPlayerScore(0);
+        game.getComputer().setComputerScore(0);
+        myScore.setText(String.valueOf(game.getPlayer().getPlayerScore()));
+        computerScore.setText(String.valueOf(game.getComputer().getComputerScore()));
+
+    }
 
 
 }

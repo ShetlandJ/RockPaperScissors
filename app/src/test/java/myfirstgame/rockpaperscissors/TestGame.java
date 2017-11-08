@@ -22,14 +22,14 @@ public class TestGame {
 
     @Before
     public void setUp(){
-        game = new Game("The House");
+        game = new Game();
         player = new Player("James");
         player.playerChoice(Throw.PAPER);
     }
 
     @Test
     public void canGetRandomAnswer(){
-        Game spy = Mockito.spy(new Game("The House"));
+        Game spy = Mockito.spy(new Game());
         Mockito.when(spy.getRandomNumber()).thenReturn(0);
         Throw answer = spy.computersRandomSelection();
         Assert.assertEquals("Rock", answer.getThrowName());
@@ -37,7 +37,7 @@ public class TestGame {
 
     @Test
     public void someoneCanWin(){
-        Game spy = Mockito.spy(new Game("The House"));
+        Game spy = Mockito.spy(new Game());
         Mockito.when(spy.compareHands(player.playersThrow())).thenReturn("Draw");
         String answer = spy.compareHands(player.playersThrow());
 

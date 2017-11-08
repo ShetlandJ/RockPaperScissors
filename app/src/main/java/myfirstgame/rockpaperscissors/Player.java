@@ -38,4 +38,8 @@ public class Player {
     public void increasePlayerScore(int playerScore) {
         this.playerScore += playerScore;
     }
+
+    public void setPlayerScore(int playerScore) {
+         this.playerScore = playerScore;
+    }
 }
